@@ -3,16 +3,23 @@
 import pygame
 from pygame.locals import *
 
+# Initialize Pygame
 pygame.init()
 
+# Create a Clock object to control frame rate
+clock = pygame.time.Clock()
+fps = 60        # Set desired frame rate
+
+
 # Get screen resolution
+# Create a Clock object to control frame rate
 screen_info = pygame.display.Info()
 print(screen_info.current_h)
 print(screen_info.current_w)
-
 screen_width = 1000
 screen_height = screen_info.current_h - 100  # Subtract 100 to adjust for caption and taskbar
 
+# Set up the window
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Jump Jump Dash')
 
@@ -33,17 +40,28 @@ bg_img = pygame.image.load('img/sky.png')
 #  To create a player and update the position as user presses key
 class Player():
     def __init__(self,x,y):
-        img = pygame.image.load('img/guy1.png')
-        self.image = pygame.transform.scale(img, (40, 80))
+        self.images_right = []
+        self.images_left = []
+        self.index = 0
+        self.counter = 0
+        for num in range(1, 5):
+            img_right = pygame.image.load(f'img/guy{num}.png')
+            img_right = pygame.transform.scale(img_right, (40, 80))
+            img_left = pygame.transform.flip(img_right, True, False)
+            self.images_right.append(img_right)
+            self.images_left.append(img_left)
+        self.image = self.images_right[self.index]
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
         self.vel_y = 0
         self.jumped = False
+        self.direction = 0
 
     def update(self):
         dx = 0
         dy = 0
+        walk_cooldown = 20
 
         # get keypresses
         key = pygame.key.get_pressed()
@@ -54,9 +72,34 @@ class Player():
             self.jumped = False
         if key[pygame.K_LEFT]:
             dx -= 5
+            self.counter += 1
+            self.direction = -1
         if key[pygame.K_RIGHT]:
             dx += 5
+            self.counter += 1
+            self.direction = 1
+        if key[pygame.K_LEFT] == False and key[pygame.K_RIGHT] == False:
+            self.counter = 0
+            self.index = 0
+            if self.direction == 1:
+                self.image = self.images_right[self.index]
+            if self.direction == -1:
+                self.image = self.images_left[self.index]
         
+
+        # handle animations
+        self.counter += 1
+        if self.counter > walk_cooldown:
+            self.counter = 0
+            self.index += 1
+            if self.index >= len(self.images_right):
+                self.index = 0
+            if self.direction == 1:
+                self.image = self.images_right[self.index]
+            if self.direction == -1:
+                self.image = self.images_left[self.index]
+
+
         # add gravity
         self.vel_y += 1
         if self.vel_y > 10:
@@ -140,9 +183,11 @@ world_data = [
 player = Player(100, screen_height - 130)
 world = World(world_data)
 
+# Game loop
 run = True
 while run:
 
+    clock.tick(fps)
     screen.blit(bg_img, (0, 0))
     screen.blit(sun_img, (100, 100))
 
