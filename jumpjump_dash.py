@@ -2,6 +2,8 @@
 
 import pygame
 from pygame.locals import *
+from button import Button
+from enemy import Enemy
 
 # Initialize Pygame
 pygame.init()
@@ -39,33 +41,6 @@ restart_img = pygame.image.load('img/restart_btn.png')
 #         pygame.draw.line(screen, (255, 255, 255), (0, line * tile_size), (screen_width, line * tile_size))
 #         pygame.draw.line(screen, (255, 255, 255), (line * tile_size, 0), (line * tile_size, screen_height))
 
-
-class Button():
-    def __init__(self, x, y, image):
-        self.image = image
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.clicked = False
-
-    def draw(self):
-        restart_the_game = False
-
-        pos = pygame.mouse.get_pos()
-        #check if mouse over and clicked
-        if self.rect.collidepoint(pos):
-            if pygame.mouse.get_pressed()[0] == 1 and self.clicked == False:     # left mouse click
-                restart_the_game = True
-                self.clicked = True
-        
-        if pygame.mouse.get_pressed()[0] == 0:
-            self.clicked = False
-        
-
-        # draw the btton
-        screen.blit(self.image, self.rect)
-
-        return restart_the_game
 
 #  To create a player and update the position as user presses key
 class Player():
@@ -211,29 +186,25 @@ class World():
         for row in data:
             col_count = 0
             for tile in row:
-                if tile == 1:
-                    img = pygame.transform.scale(
-                        dirt_img, (tile_size, tile_size))
+                if tile == 1:       # to create dirt
+                    img = pygame.transform.scale(dirt_img, (tile_size, tile_size))
                     img_rect = img.get_rect()       # rectangle for collision detection
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
                     tile = (img, img_rect)
                     self.tile_list.append(tile)
-                if tile == 2:
-                    img = pygame.transform.scale(
-                        grass_img, (tile_size, tile_size))
+                if tile == 2:       # to create grass
+                    img = pygame.transform.scale(grass_img, (tile_size, tile_size))
                     img_rect = img.get_rect()       # rectangle for collision detection
                     img_rect.x = col_count * tile_size
                     img_rect.y = row_count * tile_size
                     tile = (img, img_rect)
                     self.tile_list.append(tile)
                 if tile == 3:            # drawing enemy
-                    blob = Enemy(col_count * tile_size,
-                                 row_count * tile_size + 15)
+                    blob = Enemy(col_count * tile_size, row_count * tile_size + 15)
                     blob_group.add(blob)
                 if tile == 6:
-                    lava = Lava(col_count * tile_size, row_count *
-                                tile_size + (tile_size // 2))
+                    lava = Lava(col_count * tile_size, row_count * tile_size + (tile_size // 2))
                     lava_group.add(lava)
                 col_count += 1
             row_count += 1
@@ -243,26 +214,6 @@ class World():
             screen.blit(tile[0], tile[1])
             # rectangle for collision detection
             pygame.draw.rect(screen, (255, 255, 255), tile[1], 2)
-
-
-# Class to create enemy
-class Enemy(pygame.sprite.Sprite):
-    def __init__(self, x, y):
-        pygame.sprite.Sprite.__init__(self)
-        self.image = pygame.image.load('img/blob.png')
-        self.rect = self.image.get_rect()
-        self.rect.x = x
-        self.rect.y = y
-        self.move_direction = 2
-        self.move_counter = 0
-
-    def update(self):
-        self.rect.x += self.move_direction
-        self.move_counter += 2
-        if self.move_counter > 50:
-            self.move_direction *= -1
-            self.move_counter *= -1
-
 
 # Class to create lava
 class Lava(pygame.sprite.Sprite):
@@ -274,7 +225,11 @@ class Lava(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-
+'''
+0 -> represents nothing or blank space
+1 -> represents dirt
+2 -> grass
+'''
 world_data = [
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
     # [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
