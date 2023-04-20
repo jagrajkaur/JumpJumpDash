@@ -1,0 +1,22 @@
+CREATE DATABASE `Jump_Jump_Dash`;
+
+USE `Jump_Jump_Dash`;
+
+CREATE TABLE `Player_Info` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `PlayerName` varchar(25) DEFAULT NULL,
+  `Password` varchar(25) DEFAULT NULL,
+  `Score` int DEFAULT 0,
+  `level` int DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_UNIQUE` (`id`),
+  UNIQUE KEY `PlayerName_UNIQUE` (`PlayerName`)
+) AUTO_INCREMENT = 4;
+
+INSERT INTO `Player_Info` VALUES (1,'nikita','nikita', 0, 1),
+								(2,'jagraj','jagraj', 0, 1),
+								(3,'hero','hero', 0, 1);
+                                
+SELECT * FROM `Player_Info`;
+
+TRUNCATE TABLE `Player_Info`;
