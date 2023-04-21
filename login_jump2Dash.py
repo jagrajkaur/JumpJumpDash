@@ -170,7 +170,7 @@ def check_login_creds():
     username = entry_name.get().strip()
     passw = entry_password.get().strip()
     if passw != "" and username != "":
-        if fullmatch(r'[A-Za-z0-9@#$%^&+=]{8,25}', passw) and fullmatch(r'[A-Za-z0-9@#$%^&+=]{5,25}', username):
+        if fullmatch(r'[A-Za-z0-9_@#$%^&-+=]{8,25}', passw) and fullmatch(r'[A-Za-z0-9_@#$%^&-+=]{5,25}', username):
             # Call verify_login method from login_signup.py imported
             login_status = verify_login(username, passw)
             if login_status == 1:
@@ -202,8 +202,8 @@ def sign_up_db():
     confirm_passw = entry_ConfirmPassword.get().strip()
 
     if username != "" and passw != "" and confirm_passw != "":
-        if fullmatch(r'[A-Za-z0-9@#$%^&+=]{5,25}', username):
-            if fullmatch(r'[A-Za-z0-9@#$%^&+=]{8,25}', passw):
+        if fullmatch(r'[A-Za-z0-9_@#$%^&-+=]{5,25}', username):
+            if fullmatch(r'[A-Za-z0-9_@#$%^&-+=]{8,25}', passw):
                 # match
                 if passw == confirm_passw:
                     # Call signup method from login_signup.py imported
