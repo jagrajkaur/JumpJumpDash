@@ -41,7 +41,7 @@ font_score = pygame.font.SysFont('Bauhaus 93', 30)
 tile_size = 50
 game_over = 0    # 0 means running and -1 means over
 main_menu = True    # 0 means run game and 1 means main screen before starting (representing start / exit button)
-level = 2 
+level = 0 
 max_levels = 7
 score = 0
 
@@ -404,7 +404,9 @@ if(f'level{level}_data'):
 world = World(world_data)
 
 # creating buttons
-restart_button = Button(screen_width // 2 - 50, screen_height // 2 + 100, restart_img)
+restart_button = Button(screen_width // 2 - 200, screen_height // 2 + 100, restart_img)
+exit_over_img = pygame.transform.scale(exit_img, (120, 40))
+exit_over_button = Button(screen_width // 2 + 100, screen_height // 2 + 100, exit_over_img)
 start_button = Button(screen_width // 2 - 350, screen_height // 2, start_img)
 exit_button = Button(screen_width // 2 + 150, screen_height // 2, exit_img)
 
@@ -451,6 +453,8 @@ while run:
                 world = reset_level(level)
                 game_over = 0
                 score = 0
+            if exit_over_button.draw():
+                run = False
         
         # if player has completed the level
         if game_over == 1:
@@ -464,7 +468,7 @@ while run:
             else:           # game finished/all level completed
                 draw_text('YOU WIN!', font, blue, (screen_width // 2) - 140, screen_height // 2)
                 if restart_button.draw():
-                    level = 1
+                    level = 0
                     # reset level
                     world_data = []
                     world = reset_level(level)
@@ -479,3 +483,4 @@ while run:
     pygame.display.update()
 
 pygame.quit()
+import login_jump2Dash
