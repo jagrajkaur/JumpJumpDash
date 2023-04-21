@@ -1,3 +1,5 @@
+# establishes connection with database to insert new player or verify existing one
+
 import mysql.connector
 import traceback
 
@@ -61,4 +63,3 @@ def verify_login(username, passw):
     finally:
         mycursor.close()
         my_db.close()
-

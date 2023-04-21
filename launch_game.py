@@ -1,4 +1,4 @@
-# game functions here, function, physics
+# launch the app
 def launch():
     print("App launching")
     import jumpjump_dash
