@@ -26,9 +26,9 @@ root.title('Login Jump Jump Dash')
 root.geometry('700x550+310+130')
 root.resizable(False, False)
 
-btn_font = tkFont.Font(family='freemono', size='14', weight='bold')
-label_font = tkFont.Font(family='freemono', size='16', weight='bold')
-signup_font = tkFont.Font(family='freemono', size='14', weight='bold')
+btn_font = tkFont.Font(family='Bauhaus 93', size='14', weight='bold')
+label_font = tkFont.Font(family='Bauhaus 93', size='16', weight='bold')
+signup_font = tkFont.Font(family='Bauhaus 93', size='14', weight='bold')
 
 bg = PhotoImage(file="img/sky.png")
 
@@ -44,7 +44,7 @@ canvas1.create_rectangle(
 
 
 canvas1.create_text(350, 100, text="JUMP JUMP DASH",
-                    font=('freemono', '38', 'bold'), fill="white")
+                    font=('Bauhaus 93', '38', 'bold'), fill="white")
 
 
 # frame container of login form and sign up form
@@ -87,7 +87,7 @@ button3.place(x=420, y=200)
 
 
 # Exit Button
-buttonExit = Button(root, text="Exit", font=('freemono', '8', 'normal'),
+buttonExit = Button(root, text="Exit", font=('Bauhaus 93', '8', 'normal'),
                     bg="#f7dda1", fg="brown", command=root.destroy)
 buttonExit.place(x=670, y=5)
 
@@ -148,7 +148,7 @@ def signup_form():
 
     label_info = Label(
         bottomFrame, text="Enter a combination of alphanumeric and special characters",
-        font=('freemono', '10', 'normal'), fg="brown", bg="#ffeabd")
+        font=('Bauhaus 93', '10', 'normal'), fg="brown", bg="#ffeabd")
     label_info.grid(row=0, column=0, padx=(10, 10), pady=(0, 0))
 
     bottomFrame.place(x=140, y=300)

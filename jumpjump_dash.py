@@ -27,7 +27,7 @@ print('height :', screen_info.current_h)
 print('width :', screen_info.current_w)
 screen_width = 1000
 # Subtract 100 to adjust for caption and taskbar
-screen_height = screen_info.current_h - 50
+screen_height = 700  #screen_info.current_h - 80
 
 # Set up the window
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -420,6 +420,7 @@ while run:
     screen.blit(sun_img, (100, 100))
 
     if main_menu == True:
+        draw_text('Welcome Ready to Play Game!', font, blue, 30, 200)
         if exit_button.draw():
             run = False
         if start_button.draw():
